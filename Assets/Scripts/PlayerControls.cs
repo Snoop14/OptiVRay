@@ -8,8 +8,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] GameObject LeftHand;
     [SerializeField] GameObject RightHand;
     [SerializeField] GameObject CameraXR;
-
-    private Transform ForwardDirection;
+    [SerializeField] Transform ForwardDirection;
 
     //Vector3 Positions //May not need the curr frame variables to be declared here
     //Player
