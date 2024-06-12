@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LightInteractor : MonoBehaviour
 {
-    
+    public GameObject rayCreateObject;
 
     /// <summary>
     /// This function to be overridden based on use case

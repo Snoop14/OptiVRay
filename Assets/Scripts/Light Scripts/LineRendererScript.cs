@@ -11,6 +11,7 @@ public class LineRendererScript : MonoBehaviour
     private GameObject hitObject;
     private GameObject nextRayObject;
     private bool lightHittingLens = false;
+    private Color myColor;
 
     // Start is called before the first frame update
     void Start()
@@ -45,13 +46,15 @@ public class LineRendererScript : MonoBehaviour
             {
                 //Disable that objects light ray
                 lightHittingLens = false;
-                
+
                 //needs to be created;
+                nextRayObject = null;
                 //light on nextRayObject needs to be disabled;
             }
 
             //if the hit object is hitting a lens of some sort
-            if(tempHitObject) //If condition here needs to be changed
+            //Lenses should have the lightInteractor component on them
+            if(tempHitObject.TryGetComponent(out LightInteractor lightInteractor))
             {
                 lightHittingLens = true;
 
@@ -59,6 +62,8 @@ public class LineRendererScript : MonoBehaviour
                 //When hitting an object, another object needs to be created.
                 //That object will create another light ray. 
                 //And the object should be stored in nextRayObject;
+                lightInteractor.LightInteraction(direction, hit, myColor);
+                nextRayObject = lightInteractor.rayCreateObject;
             }
 
             hitObject = tempHitObject;
