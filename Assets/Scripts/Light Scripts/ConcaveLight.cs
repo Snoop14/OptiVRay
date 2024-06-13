@@ -6,12 +6,39 @@ public class ConcaveLight : LightInteractor
 {
     public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor)
     {
-        Vector3 forwardLens = transform.forward;
+        //transform hit point from world to local space relative to the object
         Vector3 localHitPoint = transform.InverseTransformPoint(hit.point);
-        float distanceRelation = Vector3.Distance(transform.position, localHitPoint);
 
-        float angle = Vector3.Angle(lightDir, forwardLens);
+        //Calculate new rays direction
+        Vector3 newDirection = CalculateDivergentRayDirection(localHitPoint, lightDir);
 
-        CreateNewRay(lightDir, angle, distanceRelation, hit.point);
+        //Create a new Ray
+        CreateNewRay(newDirection, hit.point);
+    }
+
+    /// <summary>
+    /// Calculate new direction for concave/Divergence lens 
+    /// </summary>
+    /// <param name="hitPoint"></param>
+    /// <param name="incomingDirection"></param>
+    /// <returns></returns>
+    private Vector3 CalculateDivergentRayDirection(Vector3 localHitPoint, Vector3 incidentDirection)
+    {
+        //Calculate surface normal at the hit point in world space
+        Vector3 worldNormal = transform.TransformDirection(localHitPoint.normalized);
+
+        float maxDivergenceAngle = 70f;//Maximum divergence angle in degrees
+        float maxDistance = 0.6f;
+
+        //Calculate the distance of hitpoint from center
+        float distanceFromCenter = localHitPoint.magnitude / maxDistance;
+
+        //Calculate the maximum divergence direction based on distance
+        Vector3 maxDivergenceDirection = Vector3.Lerp(Vector3.forward, worldNormal, distanceFromCenter);
+
+        //Calculate the divergent direction based on the incident direction and maximum divergence
+        Vector3 divergentDirection = Vector3.RotateTowards(incidentDirection, maxDivergenceDirection, Mathf.Deg2Rad * maxDivergenceAngle, 0f);
+
+        return divergentDirection.normalized;
     }
 }

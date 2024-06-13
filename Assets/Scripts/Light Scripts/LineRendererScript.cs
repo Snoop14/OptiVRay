@@ -8,9 +8,7 @@ public class LineRendererScript : MonoBehaviour
     private Vector3 lightStartPos;
     private Vector3 lightDirection;
 
-    private GameObject hitObject;
     private GameObject nextRayObject;
-    private bool lightHittingLens = false;
     private Color myColor;
 
     [SerializeField]
@@ -22,6 +20,11 @@ public class LineRendererScript : MonoBehaviour
         line = GetComponent<LineRenderer>();
         lightStartPos = transform.position;
         lightDirection = transform.forward;
+    }
+
+    private void OnEnable()
+    {
+        line.positionCount = 2;
     }
 
     // Update is called once per frame
@@ -47,39 +50,21 @@ public class LineRendererScript : MonoBehaviour
         //Enclosed room so to infinity should be fine
         if(Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
         {
-            line.positionCount = 2;
             GameObject tempHitObject = hit.collider.gameObject;
-            //if the light was hitting something before
-            // and is now hitting something else
-            if(lightHittingLens && tempHitObject != hitObject)
-            {
-                //Disable that objects light ray
-                lightHittingLens = false;
 
-                Destroy(nextRayObject);
-                //needs to be created;
-                nextRayObject = null;
-                //light on nextRayObject needs to be disabled;
-            }
+            Destroy(nextRayObject);//Destroys the next ray object before trying to add a new one
 
             //if the hit object is hitting a lens of some sort
             //Lenses should have the lightInteractor component on them
-            if(tempHitObject.TryGetComponent(out LightInteractor lightInteractor))
+            if (tempHitObject.TryGetComponent(out LightInteractor lightInteractor))
             {
-                Destroy(nextRayObject);
-                lightHittingLens = true;
-
-                //needs to be created
-                //When hitting an object, another object needs to be created.
-                //That object will create another light ray. 
-                //And the object should be stored in nextRayObject;
+                //Gets base function of any lens. Lens will handle next steps
                 lightInteractor.LightInteraction(direction, hit, myColor);
+                //stores the newly created ray from interaction here
                 nextRayObject = lightInteractor.rayCreateObject;
-                Debug.Log(nextRayObject.name);
             }
 
-            hitObject = tempHitObject;
-            SetLineLength(hit.point);
+            SetLineLength(hit.point);//sets the light ray length
         }
     }
 

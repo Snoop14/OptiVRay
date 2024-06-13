@@ -26,12 +26,22 @@ public class LightInteractor : MonoBehaviour
         //Do nothing in base
     }
 
-    public void CreateNewRay(Vector3 _lightDir, float _angle, float _distRelation, Vector3 spawnPoint)
+    /// <summary>
+    /// Instantiates a new ray at hitPoint, with rotation based on newDirection
+    /// </summary>
+    /// <param name="newDirection"></param>
+    /// <param name="hitPoint"></param>
+    public void CreateNewRay(Vector3 newDirection, Vector3 hitPoint)
     {
-        float rayAngle = _angle;
+        //Instantiate a ray object and store it
+        rayCreateObject = Instantiate(rayCreatePrefab, hitPoint, Quaternion.identity);
+        
+        //rotate the newly created ray
+        Quaternion rotation = Quaternion.LookRotation(newDirection);
+        rayCreateObject.transform.rotation = rotation;
 
-        Quaternion outDirection = Quaternion.AngleAxis(rayAngle, transform.up);
-
-        rayCreateObject = Instantiate(rayCreatePrefab, spawnPoint, outDirection, transform);
+        //Turn on the line renderer stuff for more rays :)
+        rayCreateObject.GetComponent<LineRenderer>().enabled = true;
+        rayCreateObject.GetComponent<LineRendererScript>().enabled = true;
     }
 }
