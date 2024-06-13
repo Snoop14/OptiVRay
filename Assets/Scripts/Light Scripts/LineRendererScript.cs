@@ -13,6 +13,9 @@ public class LineRendererScript : MonoBehaviour
     private bool lightHittingLens = false;
     private Color myColor;
 
+    [SerializeField]
+    float framesCounter = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +27,13 @@ public class LineRendererScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        CheckRayHit(lightStartPos, lightDirection);
+        //Reduce lag for when multiple rays are active
+        if(framesCounter == 5) 
+        {
+            CheckRayHit(lightStartPos, lightDirection);
+            framesCounter = 0;
+        }
+        framesCounter++;
     }
 
     /// <summary>
@@ -47,6 +56,7 @@ public class LineRendererScript : MonoBehaviour
                 //Disable that objects light ray
                 lightHittingLens = false;
 
+                Destroy(nextRayObject);
                 //needs to be created;
                 nextRayObject = null;
                 //light on nextRayObject needs to be disabled;
@@ -56,6 +66,7 @@ public class LineRendererScript : MonoBehaviour
             //Lenses should have the lightInteractor component on them
             if(tempHitObject.TryGetComponent(out LightInteractor lightInteractor))
             {
+                Destroy(nextRayObject);
                 lightHittingLens = true;
 
                 //needs to be created
@@ -64,6 +75,7 @@ public class LineRendererScript : MonoBehaviour
                 //And the object should be stored in nextRayObject;
                 lightInteractor.LightInteraction(direction, hit, myColor);
                 nextRayObject = lightInteractor.rayCreateObject;
+                Debug.Log(nextRayObject.name);
             }
 
             hitObject = tempHitObject;
