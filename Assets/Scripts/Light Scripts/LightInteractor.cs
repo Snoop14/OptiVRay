@@ -10,7 +10,7 @@ public class LightInteractor : MonoBehaviour
 
     private GameObject rayCreatePrefab;
 
-    private void Start()
+    private void OnEnable()
     {
         rayCreatePrefab = Resources.Load("LightRayObject") as GameObject;
     }
@@ -41,7 +41,12 @@ public class LightInteractor : MonoBehaviour
         rayCreateObject.transform.rotation = rotation;
 
         //Turn on the line renderer stuff for more rays :)
-        rayCreateObject.GetComponent<LineRenderer>().enabled = true;
         rayCreateObject.GetComponent<LineRendererScript>().enabled = true;
+        rayCreateObject.GetComponent<LineRendererScript>().NewRayCall();
+    }
+
+    public void ChangeRayColor(Color filtColor)
+    {
+        rayCreateObject.GetComponent<LineRendererScript>().ChangeColor(filtColor);
     }
 }

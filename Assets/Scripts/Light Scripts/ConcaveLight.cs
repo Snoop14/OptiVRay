@@ -28,7 +28,7 @@ public class ConcaveLight : LightInteractor
         Vector3 worldNormal = transform.TransformDirection(localHitPoint.normalized);
 
         float maxDivergenceAngle = 70f;//Maximum divergence angle in degrees
-        float maxDistance = 0.6f;
+        float maxDistance = 1f;
 
         //Calculate the distance of hitpoint from center
         float distanceFromCenter = localHitPoint.magnitude / maxDistance;
