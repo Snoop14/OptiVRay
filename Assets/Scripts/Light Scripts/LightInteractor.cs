@@ -6,47 +6,41 @@ public class LightInteractor : MonoBehaviour
 {
     //Multiple objects can be created but they are stored in the previous rays
     // code instead of a list/array here
-    public GameObject rayCreateObject;
-
-    private GameObject rayCreatePrefab;
-
-    private void OnEnable()
-    {
-        rayCreatePrefab = Resources.Load("LightRayObject") as GameObject;
-    }
+    public GameObject nextRayObject;
+    public Color rayColor;
 
     /// <summary>
-    /// This function to be overridden based on use case
+    /// This function to be overridden based on use case 
+    /// Overrides need to call base first
     /// </summary>
     /// <param name="lightDir"></param>
     /// <param name="hit"></param>
     /// <param name="hitColor"></param>
-    public virtual void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor)
+    public virtual void LightInteraction(Vector3 lightDir, RaycastHit hit, 
+                                         Color hitColor, GameObject _newRayObject)
     {
-        //Do nothing in base
+        nextRayObject = _newRayObject;
+        rayColor = hitColor;
     }
 
     /// <summary>
-    /// Instantiates a new ray at hitPoint, with rotation based on newDirection
+    /// Changes the new ray to be at hitPoint, with rotation based on newDirection
     /// </summary>
     /// <param name="newDirection"></param>
     /// <param name="hitPoint"></param>
     public void CreateNewRay(Vector3 newDirection, Vector3 hitPoint)
     {
-        //Instantiate a ray object and store it
-        rayCreateObject = Instantiate(rayCreatePrefab, hitPoint, Quaternion.identity);
+        //change position of new ray object
+        nextRayObject.transform.position = hitPoint;
         
         //rotate the newly created ray
         Quaternion rotation = Quaternion.LookRotation(newDirection);
-        rayCreateObject.transform.rotation = rotation;
+        nextRayObject.transform.rotation = rotation;
 
         //Turn on the line renderer stuff for more rays :)
-        rayCreateObject.GetComponent<LineRendererScript>().enabled = true;
-        rayCreateObject.GetComponent<LineRendererScript>().NewRayCall();
-    }
+        nextRayObject.GetComponent<LineRendererScript>().enabled = true;
 
-    public void ChangeRayColor(Color filtColor)
-    {
-        rayCreateObject.GetComponent<LineRendererScript>().ChangeColor(filtColor);
+        //Change color of the new ray
+        nextRayObject.GetComponent<LineRendererScript>().ChangeColor(rayColor);
     }
 }

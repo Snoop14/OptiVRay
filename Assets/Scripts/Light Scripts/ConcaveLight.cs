@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ConcaveLight : LightInteractor
 {
-    public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor)
+    public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject)
     {
+        base.LightInteraction(lightDir, hit, hitColor, _newRayObject);
         //transform hit point from world to local space relative to the object
         Vector3 localHitPoint = transform.InverseTransformPoint(hit.point);
 

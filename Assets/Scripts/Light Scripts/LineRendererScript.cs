@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class LineRendererScript : MonoBehaviour
     private Vector3 lightDirection;
 
     private GameObject nextRayObject;
+    private GameObject rayCreatePrefab;
     private Color myColor;
 
     [SerializeField]
@@ -26,6 +28,8 @@ public class LineRendererScript : MonoBehaviour
 
     private void OnEnable()
     {
+        rayCreatePrefab = Resources.Load("LightRayObject") as GameObject;
+
         //Get the lineRenderer and set it up;
         line = GetComponent<LineRenderer>();
         line.enabled = true;
@@ -35,25 +39,19 @@ public class LineRendererScript : MonoBehaviour
         lightDirection = transform.forward;
 
         myColor = GetComponent<Renderer>().material.color;
+        Debug.Log(myColor);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         //Reduce lag for when multiple rays are active
-        if(framesCounter == 10) 
+        if(line.positionCount == 2 && framesCounter >= 10) 
         {
             CheckRayHit(lightStartPos, lightDirection);
             framesCounter = 0;
         }
         framesCounter++;
-    }
-
-
-    public void NewRayCall()
-    {
-        //Calling this recursively results in crashes
-        //CheckRayHit(lightStartPos, lightDirection);
     }
 
     /// <summary>
@@ -69,18 +67,20 @@ public class LineRendererScript : MonoBehaviour
         {
             GameObject tempHitObject = hit.collider.gameObject;
 
-
-            //Need to figure out a way without destroying every frame
-            Destroy(nextRayObject);//Destroys the next ray object before trying to add a new one
-
             //if the hit object is hitting a lens of some sort
             //Lenses should have the lightInteractor component on them
             if (tempHitObject.TryGetComponent(out LightInteractor lightInteractor))
             {
+                if(nextRayObject == null)
+                {
+                    nextRayObject = Instantiate(rayCreatePrefab);
+                }
                 //Gets base function of any lens. Lens will handle next steps
-                lightInteractor.LightInteraction(direction, hit, myColor);
-                //stores the newly created ray from interaction here
-                nextRayObject = lightInteractor.rayCreateObject;
+                lightInteractor.LightInteraction(direction, hit, myColor, nextRayObject);
+            }
+            else if(nextRayObject != null)
+            {
+                nextRayObject.GetComponent<LineRendererScript>().DisableRay();
             }
 
             SetLineLength(hit.point);//sets the light ray length
@@ -95,6 +95,7 @@ public class LineRendererScript : MonoBehaviour
     /// <param name="endPos"></param>
     void SetLineLength(Vector3 endPos)
     {
+        line.positionCount = 2;
         endPos = transform.InverseTransformPoint(endPos);
         line.SetPosition(1, endPos);
     }
@@ -103,5 +104,19 @@ public class LineRendererScript : MonoBehaviour
     {
         myColor = newColor;
         GetComponent<Renderer>().material.color = myColor;
+    }
+
+    public void DisableRay()
+    {
+        try
+        {
+            line.positionCount = 0;
+        }
+        catch(NullReferenceException ex) {}
+
+        Destroy(nextRayObject);
+        nextRayObject = null;
+        GetComponent<Renderer>().material.color = Color.white;
+        this.enabled = false;
     }
 }

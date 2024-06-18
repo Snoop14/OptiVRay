@@ -13,14 +13,17 @@ public class FilterLight : LightInteractor
         myColor = GetComponent<Renderer>().material.color;
     }
 
-    public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor)
+    public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject)
     {
+        base.LightInteraction(lightDir, hit, hitColor, _newRayObject);
         Color filtColor = CheckColor(hitColor);
 
-        CreateNewRay(lightDir, hit.point);
-
-        //Change the color of the new ray
-        rayCreateObject.GetComponent<LineRendererScript>().ChangeColor(filtColor);
+        //Create next ray only if filt color isn't black
+        if(filtColor != Color.black)
+        {
+            rayColor = filtColor;
+            CreateNewRay(lightDir, hit.point);
+        }
     }
 
     /// <summary>
