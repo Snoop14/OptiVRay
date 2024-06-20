@@ -14,7 +14,7 @@ public class ConcaveLight : LightInteractor
         Vector3 newDirection = CalculateDivergentRayDirection(localHitPoint, lightDir);
 
         //Create a new Ray
-        CreateNewRay(newDirection, hit.point);
+        ChangeNewRay(newDirection, hit.point);
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public class ConcaveLight : LightInteractor
         Vector3 worldNormal = transform.TransformDirection(localHitPoint.normalized);
 
         float maxDivergenceAngle = 70f;//Maximum divergence angle in degrees
-        float maxDistance = 1f;
+        float maxDistance = 1.4f;
 
         //Calculate the distance of hitpoint from center
         float distanceFromCenter = localHitPoint.magnitude / maxDistance;

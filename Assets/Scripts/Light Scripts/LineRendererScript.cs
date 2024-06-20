@@ -13,18 +13,11 @@ public class LineRendererScript : MonoBehaviour
     private GameObject rayCreatePrefab;
     private Color myColor;
 
+    //Need to check if the line is hitting the object that brings the line into affect
+    public GameObject causeInteractor;
+
     [SerializeField]
     float framesCounter = 0;
-
-    /*
-    // Start is called before the first frame update
-    void Start()
-    {
-        line = GetComponent<LineRenderer>();
-        lightStartPos = transform.position;
-        lightDirection = transform.forward;
-    }
-    */
 
     private void OnEnable()
     {
@@ -39,7 +32,6 @@ public class LineRendererScript : MonoBehaviour
         lightDirection = transform.forward;
 
         myColor = GetComponent<Renderer>().material.color;
-        Debug.Log(myColor);
     }
 
     // Update is called once per frame
@@ -50,6 +42,7 @@ public class LineRendererScript : MonoBehaviour
         {
             CheckRayHit(lightStartPos, lightDirection);
             framesCounter = 0;
+
         }
         framesCounter++;
     }
@@ -69,11 +62,16 @@ public class LineRendererScript : MonoBehaviour
 
             //if the hit object is hitting a lens of some sort
             //Lenses should have the lightInteractor component on them
-            if (tempHitObject.TryGetComponent(out LightInteractor lightInteractor))
+            if (tempHitObject.TryGetComponent(out LightInteractor lightInteractor) && tempHitObject != causeInteractor)
             {
-                if(nextRayObject == null)
+                Debug.Log("has interactor");
+                if(nextRayObject == null && transform.childCount == 0)
                 {
-                    nextRayObject = Instantiate(rayCreatePrefab);
+                    nextRayObject = Instantiate(rayCreatePrefab, transform);
+                }
+                else if(nextRayObject == null)
+                {
+                    nextRayObject = transform.GetChild(0).gameObject;
                 }
                 //Gets base function of any lens. Lens will handle next steps
                 lightInteractor.LightInteraction(direction, hit, myColor, nextRayObject);
@@ -108,15 +106,13 @@ public class LineRendererScript : MonoBehaviour
 
     public void DisableRay()
     {
+        Destroy(nextRayObject);
+        ChangeColor(Color.white);
+        enabled = false;
         try
         {
             line.positionCount = 0;
         }
-        catch(NullReferenceException ex) {}
-
-        Destroy(nextRayObject);
-        nextRayObject = null;
-        GetComponent<Renderer>().material.color = Color.white;
-        this.enabled = false;
+        catch (NullReferenceException ex) { }
     }
 }

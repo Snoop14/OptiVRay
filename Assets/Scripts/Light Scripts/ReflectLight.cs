@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ReflectLight : LightInteractor
 {
-    
-
     public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject)
     {
         base.LightInteraction(lightDir, hit, hitColor, _newRayObject);
@@ -18,7 +16,7 @@ public class ReflectLight : LightInteractor
         {
             Vector3 newDirection = CalculateReflectedRayDirection(lightDir, hit);
 
-            CreateNewRay(newDirection, hit.point);
+            ChangeNewRay(newDirection, hit.point);
         }
         else
         {

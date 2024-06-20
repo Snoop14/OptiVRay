@@ -28,19 +28,18 @@ public class LightInteractor : MonoBehaviour
     /// </summary>
     /// <param name="newDirection"></param>
     /// <param name="hitPoint"></param>
-    public void CreateNewRay(Vector3 newDirection, Vector3 hitPoint)
+    public void ChangeNewRay(Vector3 newDirection, Vector3 hitPoint)
     {
         //change position of new ray object
         nextRayObject.transform.position = hitPoint;
         
-        //rotate the newly created ray
+        //rotate the latest ray 
         Quaternion rotation = Quaternion.LookRotation(newDirection);
         nextRayObject.transform.rotation = rotation;
 
-        //Turn on the line renderer stuff for more rays :)
-        nextRayObject.GetComponent<LineRendererScript>().enabled = true;
-
-        //Change color of the new ray
-        nextRayObject.GetComponent<LineRendererScript>().ChangeColor(rayColor);
+        LineRendererScript lineRenderer = nextRayObject.GetComponent<LineRendererScript>();
+        lineRenderer.enabled = true;
+        lineRenderer.ChangeColor(rayColor);
+        lineRenderer.causeInteractor = gameObject;
     }
 }

@@ -22,7 +22,7 @@ public class FilterLight : LightInteractor
         if(filtColor != Color.black)
         {
             rayColor = filtColor;
-            CreateNewRay(lightDir, hit.point);
+            ChangeNewRay(lightDir, hit.point);
         }
     }
 
@@ -34,7 +34,6 @@ public class FilterLight : LightInteractor
     /// <returns></returns>
     private Color CheckColor(Color _hitColor)
     {
-        Debug.Log(myColor.ToString());
         Color filtColor = Color.black;
 
         if(myColor.r == 1f && _hitColor.r == 1f)
