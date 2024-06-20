@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 321335386}
   - component: {fileID: 321335388}
   - component: {fileID: 321335387}
+  - component: {fileID: 321335389}
   m_Layer: 2
   m_Name: RayCreator (2)
   m_TagString: Untagged
@@ -165,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e36987308fe734290be75cdc664f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  causeInteractor: {fileID: 0}
+  causeInteractor: {fileID: 1510171448}
   framesCounter: 2
 --- !u!120 &321335388
 LineRenderer:
@@ -264,6 +265,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!65 &321335389
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321335385}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &403797970
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,6 +289,7 @@ GameObject:
   - component: {fileID: 403797971}
   - component: {fileID: 403797973}
   - component: {fileID: 403797972}
+  - component: {fileID: 403797974}
   m_Layer: 2
   m_Name: RayCreator (1)
   m_TagString: Untagged
@@ -308,7 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e36987308fe734290be75cdc664f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  causeInteractor: {fileID: 0}
+  causeInteractor: {fileID: 1510171448}
   framesCounter: 1
 --- !u!120 &403797973
 LineRenderer:
@@ -407,6 +422,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!65 &403797974
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403797970}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &441031152
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,6 +887,7 @@ GameObject:
   - component: {fileID: 629102186}
   - component: {fileID: 629102188}
   - component: {fileID: 629102187}
+  - component: {fileID: 629102189}
   m_Layer: 2
   m_Name: RayCreator (4)
   m_TagString: Untagged
@@ -892,7 +921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e36987308fe734290be75cdc664f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  causeInteractor: {fileID: 0}
+  causeInteractor: {fileID: 1510171448}
   framesCounter: 4
 --- !u!120 &629102188
 LineRenderer:
@@ -991,6 +1020,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!65 &629102189
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629102185}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &659234798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,6 +1845,7 @@ GameObject:
   - component: {fileID: 975235425}
   - component: {fileID: 975235426}
   - component: {fileID: 975235427}
+  - component: {fileID: 975235428}
   m_Layer: 2
   m_Name: RayCreator
   m_TagString: Untagged
@@ -1933,8 +1976,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e36987308fe734290be75cdc664f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  causeInteractor: {fileID: 0}
+  causeInteractor: {fileID: 1510171448}
   framesCounter: 0
+--- !u!65 &975235428
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975235424}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &990396450
 GameObject:
   m_ObjectHideFlags: 0
@@ -3586,6 +3642,7 @@ GameObject:
   - component: {fileID: 1578362009}
   - component: {fileID: 1578362011}
   - component: {fileID: 1578362010}
+  - component: {fileID: 1578362012}
   m_Layer: 2
   m_Name: RayCreator (3)
   m_TagString: Untagged
@@ -3619,7 +3676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e36987308fe734290be75cdc664f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  causeInteractor: {fileID: 0}
+  causeInteractor: {fileID: 1510171448}
   framesCounter: 3
 --- !u!120 &1578362011
 LineRenderer:
@@ -3718,6 +3775,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!65 &1578362012
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578362008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1590589232
 GameObject:
   m_ObjectHideFlags: 0
@@ -4091,6 +4161,7 @@ GameObject:
   - component: {fileID: 1846631300}
   - component: {fileID: 1846631302}
   - component: {fileID: 1846631301}
+  - component: {fileID: 1846631303}
   m_Layer: 2
   m_Name: RayCreator (7)
   m_TagString: Untagged
@@ -4124,7 +4195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e36987308fe734290be75cdc664f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  causeInteractor: {fileID: 0}
+  causeInteractor: {fileID: 1510171448}
   framesCounter: 2
 --- !u!120 &1846631302
 LineRenderer:
@@ -4223,6 +4294,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!65 &1846631303
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846631299}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1870252524
 GameObject:
   m_ObjectHideFlags: 0
@@ -4234,6 +4318,7 @@ GameObject:
   - component: {fileID: 1870252525}
   - component: {fileID: 1870252527}
   - component: {fileID: 1870252526}
+  - component: {fileID: 1870252528}
   m_Layer: 2
   m_Name: RayCreator (6)
   m_TagString: Untagged
@@ -4267,7 +4352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e36987308fe734290be75cdc664f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  causeInteractor: {fileID: 0}
+  causeInteractor: {fileID: 1510171448}
   framesCounter: 1
 --- !u!120 &1870252527
 LineRenderer:
@@ -4366,6 +4451,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!65 &1870252528
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870252524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1931532097
 GameObject:
   m_ObjectHideFlags: 0
@@ -4537,6 +4635,7 @@ GameObject:
   - component: {fileID: 1991404905}
   - component: {fileID: 1991404907}
   - component: {fileID: 1991404906}
+  - component: {fileID: 1991404908}
   m_Layer: 2
   m_Name: RayCreator (5)
   m_TagString: Untagged
@@ -4570,7 +4669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e36987308fe734290be75cdc664f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  causeInteractor: {fileID: 0}
+  causeInteractor: {fileID: 1510171448}
   framesCounter: 0
 --- !u!120 &1991404907
 LineRenderer:
@@ -4669,6 +4768,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!65 &1991404908
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991404904}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2070488476
 GameObject:
   m_ObjectHideFlags: 0
@@ -4680,6 +4792,7 @@ GameObject:
   - component: {fileID: 2070488477}
   - component: {fileID: 2070488479}
   - component: {fileID: 2070488478}
+  - component: {fileID: 2070488480}
   m_Layer: 2
   m_Name: RayCreator (8)
   m_TagString: Untagged
@@ -4713,7 +4826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e36987308fe734290be75cdc664f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  causeInteractor: {fileID: 0}
+  causeInteractor: {fileID: 1510171448}
   framesCounter: 3
 --- !u!120 &2070488479
 LineRenderer:
@@ -4812,6 +4925,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!65 &2070488480
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070488476}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2074458017
 GameObject:
   m_ObjectHideFlags: 0

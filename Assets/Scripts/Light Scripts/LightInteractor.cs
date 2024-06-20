@@ -40,6 +40,6 @@ public class LightInteractor : MonoBehaviour
         LineRendererScript lineRenderer = nextRayObject.GetComponent<LineRendererScript>();
         lineRenderer.enabled = true;
         lineRenderer.ChangeColor(rayColor);
-        lineRenderer.causeInteractor = gameObject;
+        lineRenderer.causeInteractor = gameObject.GetComponent<Collider>();
     }
 }

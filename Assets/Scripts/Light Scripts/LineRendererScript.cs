@@ -14,10 +14,10 @@ public class LineRendererScript : MonoBehaviour
     private Color myColor;
 
     //Need to check if the line is hitting the object that brings the line into affect
-    public GameObject causeInteractor;
+    public Collider causeInteractor;
 
     [SerializeField]
-    float framesCounter = 0;
+    public float framesCounter = 0;
 
     private void OnEnable()
     {
@@ -60,14 +60,21 @@ public class LineRendererScript : MonoBehaviour
         {
             GameObject tempHitObject = hit.collider.gameObject;
 
+            if(tempHitObject == causeInteractor.gameObject)
+            {
+                //Issue with raycast hitting the object that causes the new ray.
+                // fixed by returning and trying again later??????!!!!!@!
+                return;
+            }
+
             //if the hit object is hitting a lens of some sort
             //Lenses should have the lightInteractor component on them
-            if (tempHitObject.TryGetComponent(out LightInteractor lightInteractor) && tempHitObject != causeInteractor)
+            if (tempHitObject.TryGetComponent(out LightInteractor lightInteractor) && tempHitObject != causeInteractor.gameObject)
             {
-                Debug.Log("has interactor");
                 if(nextRayObject == null && transform.childCount == 0)
                 {
                     nextRayObject = Instantiate(rayCreatePrefab, transform);
+                    nextRayObject.GetComponent<LineRendererScript>().framesCounter = framesCounter - 2;
                 }
                 else if(nextRayObject == null)
                 {
