@@ -12,6 +12,8 @@ public class VRController : MonoBehaviour
     [SerializeField]
     PlayerControls playerControl;
 
+    private bool firstPress = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +34,18 @@ public class VRController : MonoBehaviour
         if (vrController.inputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out isButtonPressed)
             && isButtonPressed)
         {
+            if(!isButtonPressed)
+            {
+                firstPress = true;
+                playerControl.SetPrevFrame();
+            }
+            
             playerControl.PlayerMovement();
+        }
+
+        if(!isButtonPressed)
+        {
+            firstPress = false;
         }
     }
 }

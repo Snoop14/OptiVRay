@@ -29,15 +29,15 @@ public class PlayerControls : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetPrevFrame();
+    }
+
+    public void SetPrevFrame()
+    {
+        //Set previous frame of player and hands for next frame;
         PlayerPrevFrame = transform.position;
         LeftHPrevFrame = LeftHand.transform.position;
         RightHPrevFrame = RightHand.transform.position;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void PlayerMovement()
@@ -72,8 +72,6 @@ public class PlayerControls : MonoBehaviour
         }
 
         //Set previous frame of player and hands for next frame;
-        PlayerPrevFrame = transform.position;
-        LeftHPrevFrame = LeftHand.transform.position;
-        RightHPrevFrame = RightHand.transform.position;
+        SetPrevFrame();
     }
 }
