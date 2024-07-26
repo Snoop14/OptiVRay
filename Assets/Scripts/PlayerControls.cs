@@ -22,9 +22,8 @@ public class PlayerControls : MonoBehaviour
     private Vector3 RightHCurrFrame;
 
     [Header("")]
-    [SerializeField] float Speed = 60;
+    [SerializeField] float Speed = 80;
     private float Speed_Hand;
-
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +68,7 @@ public class PlayerControls : MonoBehaviour
         {
             //Move player
             transform.position += ForwardDirection.forward * Speed_Hand * Speed * Time.deltaTime;
+
         }
 
         //Set previous frame of player and hands for next frame;

@@ -6,8 +6,6 @@ using UnityEngine;
 public class LineRendererScript : MonoBehaviour
 {
     private LineRenderer line;
-    private Vector3 lightStartPos;
-    private Vector3 lightDirection;
 
     private GameObject nextRayObject;
     private GameObject rayCreatePrefab;
@@ -19,6 +17,8 @@ public class LineRendererScript : MonoBehaviour
     [SerializeField]
     public float framesCounter = 0;
 
+    public GameObject hitObject;
+
     private void OnEnable()
     {
         rayCreatePrefab = Resources.Load("LightRayObject") as GameObject;
@@ -28,9 +28,6 @@ public class LineRendererScript : MonoBehaviour
         line.enabled = true;
         line.positionCount = 2;
 
-        lightStartPos = transform.position;
-        lightDirection = transform.forward;
-
         myColor = GetComponent<Renderer>().material.color;
     }
 
@@ -38,9 +35,9 @@ public class LineRendererScript : MonoBehaviour
     void FixedUpdate()
     {
         //Reduce lag for when multiple rays are active
-        if(line.positionCount == 2 && framesCounter >= 10) 
+        if(line.positionCount == 2 && framesCounter >= 6) 
         {
-            CheckRayHit(lightStartPos, lightDirection);
+            CheckRayHit(transform.position, transform.forward);
             framesCounter = 0;
 
         }
@@ -54,22 +51,37 @@ public class LineRendererScript : MonoBehaviour
     /// <param name="direction"></param>
     void CheckRayHit(Vector3 startPos, Vector3 direction)
     {
+        //Debug.DrawRay(startPos, direction, Color.black);
         //Send a raycast out to hit an object
         //Enclosed room so to infinity should be fine
-        if(Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
+        if(Physics.Raycast(startPos, direction, out RaycastHit hit, 200f))
         {
             GameObject tempHitObject = hit.collider.gameObject;
+            hitObject = tempHitObject;
 
-            if(tempHitObject == causeInteractor.gameObject)
+            if (tempHitObject == causeInteractor.gameObject)
             {
                 //Issue with raycast hitting the object that causes the new ray.
                 // fixed by returning and trying again later??????!!!!!@!
                 return;
             }
 
+            //Checks if the object is the initial ray creator
+            if(transform.parent.name != "Cylinder")
+            {
+                //checks if the hit object is the same hit object as it's parent.
+                //A direct parent and child should not be capable of hitting the same object
+                if(tempHitObject == transform.parent.GetComponent<LineRendererScript>().hitObject)
+                {
+                    //If this bug does occur, disable the ray on the child and return
+                    DisableRay();
+                    return;
+                }
+            }
+
             //if the hit object is hitting a lens of some sort
             //Lenses should have the lightInteractor component on them
-            if (tempHitObject.TryGetComponent(out LightInteractor lightInteractor) && tempHitObject != causeInteractor.gameObject)
+            if (tempHitObject.TryGetComponent(out LightInteractor lightInteractor))
             {
                 if(nextRayObject == null && transform.childCount == 0)
                 {
@@ -113,13 +125,14 @@ public class LineRendererScript : MonoBehaviour
 
     public void DisableRay()
     {
-        Destroy(nextRayObject);
-        ChangeColor(Color.white);
+        Destroy(nextRayObject); //destroy the child object of this ray
+        //Disable and reset values if possible
+        ChangeColor(Color.white); 
         enabled = false;
         try
         {
             line.positionCount = 0;
         }
-        catch (NullReferenceException ex) { }
+        catch (NullReferenceException) { }
     }
 }

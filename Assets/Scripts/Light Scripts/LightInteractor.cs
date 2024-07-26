@@ -30,12 +30,15 @@ public class LightInteractor : MonoBehaviour
     /// <param name="hitPoint"></param>
     public void ChangeNewRay(Vector3 newDirection, Vector3 hitPoint)
     {
-        //change position of new ray object
-        nextRayObject.transform.position = hitPoint;
-        
         //rotate the latest ray 
         Quaternion rotation = Quaternion.LookRotation(newDirection);
         nextRayObject.transform.rotation = rotation;
+
+        //Move the hit point a little forward
+        hitPoint += (rotation * Vector3.forward) * 0.015f;
+
+        //change position of new ray object
+        nextRayObject.transform.position = hitPoint;
 
         LineRendererScript lineRenderer = nextRayObject.GetComponent<LineRendererScript>();
         lineRenderer.enabled = true;

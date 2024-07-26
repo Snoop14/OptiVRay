@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Convex/Convergence lens
+/// </summary>
 public class ConvexLight : LightInteractor
 {
     public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject)
@@ -38,6 +41,6 @@ public class ConvexLight : LightInteractor
         //Calculate the divergent direction based on the incident direction and maximum divergence
         Vector3 convergentDirection = Vector3.RotateTowards(incidentDirection, maxConvergenceDirection, Mathf.Deg2Rad * maxConvergenceAngle, 0f);
 
-        return convergentDirection.normalized;
+        return maxConvergenceDirection.normalized;
     }
 }

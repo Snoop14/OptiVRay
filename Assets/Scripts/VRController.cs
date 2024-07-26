@@ -34,18 +34,15 @@ public class VRController : MonoBehaviour
         if (vrController.inputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out isButtonPressed)
             && isButtonPressed)
         {
-            if(!isButtonPressed)
+            if(!firstPress)
             {
-                firstPress = true;
                 playerControl.SetPrevFrame();
+                
             }
             
             playerControl.PlayerMovement();
         }
 
-        if(!isButtonPressed)
-        {
-            firstPress = false;
-        }
+        firstPress = isButtonPressed;
     }
 }
