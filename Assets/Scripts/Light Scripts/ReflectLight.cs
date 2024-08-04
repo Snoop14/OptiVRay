@@ -7,12 +7,19 @@ public class ReflectLight : LightInteractor
     public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject)
     {
         base.LightInteraction(lightDir, hit, hitColor, _newRayObject);
+        
+
+        Vector3 newDirection = CalculateReflectedRayDirection(lightDir, hit);
+
+        ChangeNewRay(newDirection, hit.point);
+
+        /*
         //Get the angle between the lights direction and the objects mirror location direction
         Vector3 forwardMirror = transform.up; //mirror is at transform.up
         float angle = Vector3.Angle(lightDir, forwardMirror);
 
         //If hitting the front of the object
-        if (angle > 115f)
+        if (angle > 0f)
         {
             Vector3 newDirection = CalculateReflectedRayDirection(lightDir, hit);
 
@@ -24,6 +31,7 @@ public class ReflectLight : LightInteractor
             // so just disable ray to stop it
             nextRayObject.GetComponent<LineRendererScript>().DisableRay();
         }
+        */
     }
 
     /// <summary>

@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class ConvexLight : LightInteractor
 {
+    float refractiveIndex = 200000f;
+
     public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject)
     {
         base.LightInteraction(lightDir, hit, hitColor, _newRayObject);
@@ -38,9 +40,9 @@ public class ConvexLight : LightInteractor
         maxConvergenceDirection.x = -maxConvergenceDirection.x;
         maxConvergenceDirection.y = -maxConvergenceDirection.y;
 
-        //Calculate the divergent direction based on the incident direction and maximum divergence
+        //Calculate the divergent direction based on the incident direction and maximum divergence //uneccessary line?
         Vector3 convergentDirection = Vector3.RotateTowards(incidentDirection, maxConvergenceDirection, Mathf.Deg2Rad * maxConvergenceAngle, 0f);
 
-        return maxConvergenceDirection.normalized;
+        return maxConvergenceDirection.normalized * refractiveIndex;
     }
 }
