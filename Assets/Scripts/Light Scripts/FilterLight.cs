@@ -10,7 +10,12 @@ public class FilterLight : LightInteractor
     // Start is called before the first frame update
     void Start()
     {
-        myColor = GetComponent<Renderer>().material.color;
+        SetColor(GetComponent<Renderer>().material.color);
+    }
+
+    public void SetColor(Color _myColor)
+    {
+        myColor = _myColor;
     }
 
     public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject)

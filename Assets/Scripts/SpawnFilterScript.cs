@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnFilterScript : MonoBehaviour
 {
+    private Transform hologram;
     private Color filtColor;
     private Renderer filtRenderer;
     private Vector3 rotSpeed;
@@ -14,15 +15,16 @@ public class SpawnFilterScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hologram = transform.GetChild(1);
         filtColor = Color.black;
         filtColor.a = 175f / 255f;
-        filtRenderer = GetComponent<Renderer>();
+        filtRenderer = hologram.GetComponent<Renderer>();
         filtRenderer.material.color = filtColor;
         rotSpeed = new Vector3(0, 50, 0);
     }
     private void Update()
     {
-        transform.Rotate(rotSpeed * Time.deltaTime);
+        hologram.Rotate(rotSpeed * Time.deltaTime);
     }
 
     public void AddRemoveColour(int colIndex)
@@ -50,8 +52,20 @@ public class SpawnFilterScript : MonoBehaviour
 
     }
 
-    public void spawnFilter()
+    private void OnTriggerExit(Collider other)
     {
+        if(other.transform == hologram)
+        {
+            hologram.GetComponent<FilterLight>().SetColor(filtColor);
+            hologram = Instantiate(hologram, transform);
+            hologram.localPosition = Vector3.zero;
 
+            Rigidbody holoRB = hologram.GetComponent<Rigidbody>();
+            holoRB.drag = float.PositiveInfinity;
+            holoRB.angularDrag = float.PositiveInfinity;
+            holoRB.isKinematic = true;
+
+            filtRenderer = hologram.GetComponent <Renderer>();
+        }
     }
 }
