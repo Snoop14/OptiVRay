@@ -67,7 +67,7 @@ public class LineRendererScript : MonoBehaviour
             }
 
             //Checks if the object is the initial ray creator
-            if(transform.parent.name != "Cylinder")
+            if(transform.parent.name != "LightRayStub")
             {
                 //checks if the hit object is the same hit object as it's parent.
                 //A direct parent and child should not be capable of hitting the same object
