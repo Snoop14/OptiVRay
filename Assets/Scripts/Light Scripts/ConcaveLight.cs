@@ -36,14 +36,15 @@ public class ConcaveLight : LightInteractor
         float maxDistance = 1.4f;
 
         //Calculate the distance of hitpoint from center
-        float distanceFromCenter = localHitPoint.magnitude / maxDistance;
+        // Also adjusts direction based on z scale;
+        float distanceFromCenter = localHitPoint.magnitude / maxDistance * transform.localScale.z * 2f;
 
         //Calculate the maximum divergence direction based on distance
         Vector3 maxDivergenceDirection = Vector3.Lerp(Vector3.forward, worldNormal, distanceFromCenter);
 
-        //Calculate the divergent direction based on the incident direction and maximum divergence
+        //Calculate the divergent direction based on the incident direction and maximum divergence// Unecessary code?
         Vector3 divergentDirection = Vector3.RotateTowards(incidentDirection, maxDivergenceDirection, Mathf.Deg2Rad * maxDivergenceAngle, 0f);
 
-        return divergentDirection.normalized;
+        return maxDivergenceDirection.normalized;
     }
 }

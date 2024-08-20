@@ -6,11 +6,13 @@ using UnityEngine.XR;
 
 public class VRController : MonoBehaviour
 {
-    [SerializeField]
     private XRController vrController;
+    private XRDirectInteractor xrInteractor;
 
     [SerializeField]
     PlayerControls playerControl;
+
+    private float scaleMultiplier = 1.1f;
 
     private bool firstPress = false;
 
@@ -19,12 +21,18 @@ public class VRController : MonoBehaviour
     void Start()
     {
         vrController = GetComponent<XRController>();
+        xrInteractor = GetComponent<XRDirectInteractor>();
     }
 
     // Update
     void FixedUpdate()
     {
         ButtonControls();
+
+        if (xrInteractor.interactablesSelected.Count > 0)
+        {
+            AnalogControls();
+        }
     }
 
     private void ButtonControls()
@@ -44,5 +52,29 @@ public class VRController : MonoBehaviour
         }
 
         firstPress = isButtonPressed;
+    }
+
+    private void AnalogControls()
+    {
+        Transform grabbedObject = xrInteractor.interactablesSelected[0].transform;
+        if (grabbedObject.CompareTag("Resizable"))
+        {
+            Vector2 analogStickInput;
+            if (vrController.inputDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out analogStickInput))
+            {
+                if(analogStickInput.y > 0)
+                {
+                    grabbedObject.localScale = new Vector3(grabbedObject.localScale.x, 
+                                                           grabbedObject.localScale.y, 
+                                                           Mathf.Clamp(grabbedObject.localScale.z * scaleMultiplier, 0.1f, 0.8f));
+                }
+                else if (analogStickInput.y < 0)
+                {
+                    grabbedObject.localScale = new Vector3(grabbedObject.localScale.x, 
+                                                           grabbedObject.localScale.y,
+                                                           Mathf.Clamp(grabbedObject.localScale.z / scaleMultiplier, 0.1f, 0.88f));
+                }
+            }
+        }
     }
 }
