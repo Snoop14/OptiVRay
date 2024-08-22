@@ -92,8 +92,9 @@ public class LineRendererScript : MonoBehaviour
                 {
                     nextRayObject = transform.GetChild(0).gameObject;
                 }
+
                 //Gets base function of any lens. Lens will handle next steps
-                lightInteractor.LightInteraction(direction, hit, myColor, nextRayObject);
+                lightInteractor.LightInteraction(direction, hit, myColor, nextRayObject, line.startWidth);
             }
             else if(nextRayObject != null)
             {
@@ -121,6 +122,11 @@ public class LineRendererScript : MonoBehaviour
     {
         myColor = newColor;
         GetComponent<Renderer>().material.color = myColor;
+    }
+
+    public void ChangeRayWidth(float _rayWidth)
+    {
+        line.startWidth = _rayWidth;
     }
 
     public void DisableRay()

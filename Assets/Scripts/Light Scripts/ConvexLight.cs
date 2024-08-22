@@ -7,9 +7,9 @@ using UnityEngine;
 /// </summary>
 public class ConvexLight : LightInteractor
 {
-    public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject)
+    public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject, float _rayWidth)
     {
-        base.LightInteraction(lightDir, hit, hitColor, _newRayObject);
+        base.LightInteraction(lightDir, hit, hitColor, _newRayObject, _rayWidth);
 
         //transform hit point from world to local space relative to the object
         Vector3 localHitPoint = transform.InverseTransformPoint(hit.point);

@@ -18,9 +18,9 @@ public class FilterLight : LightInteractor
         myColor = _myColor;
     }
 
-    public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject)
+    public override void LightInteraction(Vector3 lightDir, RaycastHit hit, Color hitColor, GameObject _newRayObject, float _rayWidth)
     {
-        base.LightInteraction(lightDir, hit, hitColor, _newRayObject);
+        base.LightInteraction(lightDir, hit, hitColor, _newRayObject, _rayWidth);
         Color filtColor = CheckColor(hitColor);
 
         //Create next ray only if filt color isn't black

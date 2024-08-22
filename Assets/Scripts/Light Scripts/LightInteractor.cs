@@ -8,6 +8,7 @@ public class LightInteractor : MonoBehaviour
     // code instead of a list/array here
     public GameObject nextRayObject;
     public Color rayColor;
+    private float rayWidth;
 
     /// <summary>
     /// This function to be overridden based on use case 
@@ -17,10 +18,11 @@ public class LightInteractor : MonoBehaviour
     /// <param name="hit"></param>
     /// <param name="hitColor"></param>
     public virtual void LightInteraction(Vector3 lightDir, RaycastHit hit, 
-                                         Color hitColor, GameObject _newRayObject)
+                                         Color hitColor, GameObject _newRayObject, float _rayWidth)
     {
         nextRayObject = _newRayObject;
         rayColor = hitColor;
+        rayWidth = _rayWidth;
     }
 
     /// <summary>
@@ -43,6 +45,8 @@ public class LightInteractor : MonoBehaviour
         LineRendererScript lineRenderer = nextRayObject.GetComponent<LineRendererScript>();
         lineRenderer.enabled = true;
         lineRenderer.ChangeColor(rayColor);
+        lineRenderer.ChangeRayWidth(rayWidth);
         lineRenderer.causeInteractor = gameObject.GetComponent<Collider>();
+        
     }
 }
